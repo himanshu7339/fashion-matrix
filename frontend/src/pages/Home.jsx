@@ -174,11 +174,11 @@ const Home = () => {
       <div className="fifth-section-div">
         <div className="image-container relative overflow-hidden ">
           <img
-            className="image w-full h-auto transition-transform duration-300 transform blur-[2px] cursor-pointer"
+            className="image w-full h-auto transition-transform duration-300 transform blur-[2px] "
             src={clothShop}
             alt=""
           />
-          <div className="overlay-text absolute top-[80%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-center opacity-8 transition-opacity duration-300 hover:opacity-100 text-xl lg:text-8xl cursor-pointer">
+          <div className="overlay-text absolute top-[80%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-center opacity-8 transition-opacity duration-300 hover:opacity-100 text-xl lg:text-8xl ">
             Visit Our Store
             <p className=" text-xs lg:text-xl h-auto">
               Step into our clothing shop and discover a world of style and
@@ -212,19 +212,19 @@ const Home = () => {
         </div>
         <div
           style={{ backgroundColor: "black" }}
-          className="newsletter h-28 flex justify-center items-center gap-3"
+          className="newsletter h-28 flex flex-col lg:flex-row justify-center items-center gap-3"
         >
           <h1 className="text-white text-xl lg:text-4xl">Get Newsletter From Us!</h1>
 
-          <form className="newsletter-from text-white flex gap-3">
+          <form className="newsletter-from text-sm flex gap-3">
             <input
               type="text"
-              className="rounded-full p-2 placeholder:text-xs"
-              placeholder="email address"
+              className="rounded-full pr-6 pl-6 placeholder:text-xs"
+              placeholder="Email address"
             />
             <button
               type="submit"
-              className="register-button  font-bold bg-gray pr-4 pl-4 pt-2 pb-2 text-xs rounded-full border border-red text-white bg-red transition-all"
+              className="register-button  font-bold bg-gray pr-6 pl-6 pt-2 pb-2 text-sm rounded-full border border-red text-white bg-red transition-all"
             >
               Login
             </button>
