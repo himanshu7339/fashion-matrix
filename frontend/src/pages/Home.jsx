@@ -180,7 +180,7 @@ const Home = () => {
           />
           <div className="overlay-text absolute top-[80%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-center opacity-8 transition-opacity duration-300 hover:opacity-100 text-xl lg:text-8xl ">
             Visit Our Store
-            <p className=" text-xs lg:text-xl h-auto">
+            <p className=" text-xs lg:text-xl h-auto mb-4">
               Step into our clothing shop and discover a world of style and
               comfort. Immerse yourself in the latest fashion trends, from
               timeless classics to cutting-edge designs. Our curated collection

@@ -1,5 +1,5 @@
-import React from "react";
 import { PiHandbagFill } from "react-icons/pi";
+import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <div className="header lg:flex lg:justify-around items-center">
@@ -28,12 +28,16 @@ const Header = () => {
 
         <div className="login-signup-cart-button flex gap-3 lg:gap-6  items-center lg:justify-between">
           <PiHandbagFill className="text-red text-2xl cursor-pointer" />
-          <button className="register-button text-red font-bold bg-gray pr-4 pl-4 pt-2 pb-2 text-xs rounded-full border border-red hover:text-white hover:bg-red transition-all ">
-            Register
-          </button>
-          <button className="register-button text-red font-bold bg-gray pr-4 pl-4 pt-2 pb-2 text-xs rounded-full border border-red hover:text-white hover:bg-red transition-all">
-            Login
-          </button>
+          <Link to={"/register"}>
+            <button className="register-button text-red font-bold bg-gray pr-4 pl-4 pt-2 pb-2 text-xs rounded-full border border-red hover:text-white hover:bg-red transition-all ">
+              Register
+            </button>
+          </Link>
+          <Link to={"/login"}>
+            <button className="register-button text-red font-bold bg-gray pr-4 pl-4 pt-2 pb-2 text-xs rounded-full border border-red hover:text-white hover:bg-red transition-all">
+              Login
+            </button>
+          </Link>
         </div>
       </div>
     </div>
