@@ -26,7 +26,7 @@ const Login = () => {
             className="border-b-[1px] mb-7 focus:outline-none "
           />
           <button className="bg-red p-2 mb-7">LOG IN</button>
-          <p>Have you forgotten your password?</p>
+          <Link to={"/forgot-password"}><p className="underline">Have you forgotten your password?</p></Link>
           <Link to={"/register"} className="inline-block">
             <button className="border border-red p-2 mt-7 w-full">
               REGISTER NEW ACCOUNT

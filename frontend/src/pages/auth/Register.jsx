@@ -33,7 +33,7 @@ const Register = () => {
         />
         <button className="bg-red p-2 mb-7">CREATE ACCOUNT</button>
         <p>If you have already account?</p>
-        <Link to={"/register"} className="inline-block">
+        <Link to={"/login"} className="inline-block">
           <button className="border border-red p-2 mt-7 w-full">
          LOGIN
           </button>

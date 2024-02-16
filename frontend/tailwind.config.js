@@ -9,6 +9,7 @@ export default {
       white: "white",
       darkBlue: "#3C486B",
     },
+    
   },
   plugins: [],
 };

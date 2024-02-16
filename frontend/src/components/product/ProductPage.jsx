@@ -6,33 +6,41 @@ import { IoIosArrowDown } from "react-icons/io";
 import { Rating } from "react-simple-star-rating";
 import { IoIosArrowUp } from "react-icons/io";
 import { useState } from "react";
+import ReviewSection from "./ReviewSection";
 const ProductPage = () => {
   const [openDes, setOpenDes] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const toggleDescription = () => {
     setOpenDes(!openDes);
   };
+
+  
   return (
     <div className="product-page  ">
-      <div className="product-page-content-div grid grid-cols-2 ">
-        <div className="product-page-image grid grid-cols-2 gap-1 overflow-y-auto">
+      <div className="product-page-content-div flex flex-col lg:grid lg:grid-cols-2 ">
+        <div className="product-page-image grid grid-cols-2   gap-1 overflow-y-auto">
           {/* image */}
           <img
+          
             src="https://images.pexels.com/photos/16770020/pexels-photo-16770020/free-photo-of-young-woman-in-a-white-dress-and-a-hat.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             alt=""
           />
 
           <img
+           
             src="https://images.pexels.com/photos/16770014/pexels-photo-16770014/free-photo-of-young-woman-in-a-white-dress-and-a-hat.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             alt=""
           />
 
           <img
+           
             src="https://images.pexels.com/photos/16770013/pexels-photo-16770013/free-photo-of-young-woman-in-a-white-dress-and-a-hat.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             alt=""
           />
 
           <img
+           
             src="https://images.pexels.com/photos/16770019/pexels-photo-16770019/free-photo-of-young-woman-in-a-white-dress-and-a-hat.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             alt=""
           />
@@ -40,7 +48,9 @@ const ProductPage = () => {
 
         <div className="product-information m-5 sticky top-4 ">
           <div className="product-name-price flex flex-col ">
-            <h1 className="text-xl font-semibold">Relaxed Fit Flannel shirt</h1>
+            <h1 className="text-xl  font-semibold">
+              Relaxed Fit Flannel shirt
+            </h1>
 
             <p className="text-[#9ca3af]">MRP inclusive of all taxes</p>
 
@@ -68,13 +78,13 @@ const ProductPage = () => {
 
             {/* it will be array */}
 
-            <div className="all-sizes-product flex mt-2 gap-2">
-              <div className=" border pr-9 pl-9 pb-2 pt-2">XS</div>
-              <div className=" border pr-9 pl-9 pb-2 pt-2">S</div>
-              <div className=" border pr-9 pl-9 pb-2 pt-2">M</div>
-              <div className=" border pr-9 pl-9 pb-2 pt-2">L</div>
-              <div className=" border pr-9 pl-9 pb-2 pt-2">XL</div>
-              <div className=" border pr-9 pl-9 pb-2 pt-2">XXL</div>
+            <div className="all-sizes-product flex mt-2 gap-2 overflow-x-auto">
+              <div className=" border pr-4 pl-4 lg:pr-9 lg:pl-9 lg:pb-2 lg:pt-2">XS</div>
+              <div className=" border pr-4 pl-4 lg:pr-9 lg:pl-9 lg:pb-2 lg:pt-2">S</div>
+              <div className=" border pr-4 pl-4 lg:pr-9 lg:pl-9 lg:pb-2 lg:pt-2">M</div>
+              <div className=" border pr-4 pl-4 lg:pr-9 lg:pl-9 lg:pb-2 lg:pt-2">L</div>
+              <div className=" border pr-4 pl-4 lg:pr-9 lg:pl-9 lg:pb-2 lg:pt-2">XL</div>
+              <div className=" border pr-4 pl-4 lg:pr-9 lg:pl-9 lg:pb-2 lg:pt-2">XXL</div>
             </div>
           </div>
 
@@ -111,14 +121,18 @@ const ProductPage = () => {
 
           {/* reviews */}
 
-          <div className="review-div flex items-center gap-2 mt-2">
+          <div className="review-div flex items-center gap-2 mt-4 cursor-pointer">
             <Rating
               size={20}
               initialValue={3}
               fillColor="black"
               emptyClassName="flex"
             />
-            (262 reviews)
+            <p onClick={()=> setOpen(true)}  className="font-semibold ">
+              (262 reviews)
+            </p>
+
+            <ReviewSection open={open} setOpen={setOpen}/>
           </div>
 
           {/* description */}
