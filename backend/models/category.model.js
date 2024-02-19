@@ -1,9 +1,17 @@
 import mongoose from "mongoose";
 
 const categorySchema = new mongoose.Schema({
-  category: {
+  categoryName: {
     type: String,
     required: true,
+  },
+  products: {
+    type: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+      },
+    ],
   },
   createAt: {
     type: Date,
@@ -11,4 +19,4 @@ const categorySchema = new mongoose.Schema({
   },
 });
 
-export const Review = mongoose.model("Category", categorySchema);
+export const Category = mongoose.model("Category", categorySchema);

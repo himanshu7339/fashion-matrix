@@ -30,9 +30,13 @@ app.use(cookieParser());
 // import all route
 import user from "./routes/user.route.js";
 import product from "./routes/product.route.js";
+import category from "./routes/category.route.js"
+import review from "./routes/review.route.js"
 
 app.use("/api/v1", user);
 app.use("/api/v1", product);
+app.use("/api/v1", category);
+app.use("/api/v1", review);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

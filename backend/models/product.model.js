@@ -22,19 +22,24 @@ const productSchema = new mongoose.Schema({
     required: true,
   },
 
-  productColor: [
-    {
-      type: String,
-      required: true,
-    },
-  ],
+  productColor: {
+    type: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
+  },
 
-  productSize: [
-    {
-      type: String,
-      enum: ["XS", "S", "M", "L", "XL", "XXL"],
-    },
-  ],
+  productSize: {
+    type: [
+      {
+        type: String,
+        required: true,
+        enum: ["XS", "S", "M", "L", "XL", "XXL"],
+      },
+    ],
+  },
 
   productCategory: {
     type: mongoose.Schema.Types.ObjectId,
