@@ -1,8 +1,9 @@
-import React from 'react'
+
+
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+   <div className='m-5'>Dashboard</div>
   )
 }
 

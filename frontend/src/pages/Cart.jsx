@@ -1,7 +1,20 @@
 import { Link } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { truncateText } from "../utils/function";
 
-const Cart = () => {
+const Cart = ({ setProgressBar }) => {
+  const { cart, loading } = useSelector((state) => state.cart);
+
+  useEffect(() => {
+    setProgressBar(50);
+
+    setTimeout(() => {
+      setProgressBar(100);
+    }, 200);
+  }, [setProgressBar]);
+
   return (
     <div className="cart h-[100vh]  ">
       <div className="main-content grid grid-cols-2  ">
@@ -78,33 +91,27 @@ const Cart = () => {
           </div>
         </div>
 
-        <div className="col-2 p-4">
+        <div className="col-2 p-4 cart-product-list">
           {/* cart product */}
-
-          <div className="cart-product flex justify-around mb-7 mt-7">
-            <div className="image-cart-product border p-1">
-              <img
-                width={70}
-                src="https://m.media-amazon.com/images/I/61CdSF5cAeL._SY741_.jpg"
-                alt=""
-              />
-            </div>
-            <h1 className="product-name">Product Name</h1>
-            <p>Rs 2,000</p>
-            <MdDelete className="text-2xl hover:text-red cursor-pointer duration-300" />
-          </div>
-          <div className="cart-product flex justify-around">
-            <div className="image-cart-product border p-1">
-              <img
-                width={70}
-                src="https://m.media-amazon.com/images/I/61CdSF5cAeL._SY741_.jpg"
-                alt=""
-              />
-            </div>
-            <h1 className="product-name">Product Name</h1>
-            <p>Rs 2,000</p>
-            <MdDelete className="text-2xl hover:text-red cursor-pointer duration-300" />
-          </div>
+          {cart &&
+            cart.map((item, index) => (
+              <div
+                key={item._id}
+                className="cart-product flex justify-between mb-7 mt-7 items-center"
+              >
+                <div className="image-cart-product border p-1">
+                  <img
+                    width={70}
+                    src={item.productImage}
+                    alt={item.productName}
+                  />
+                </div>
+                <h1 className="product-name max-w-[16rem]">{truncateText(item.productName, 7)}</h1>
+                <p>₹ {item.productPrice}</p>
+                <p>{item.productQty}</p>
+                <MdDelete className="text-2xl hover:text-red cursor-pointer duration-300" />
+              </div>
+            ))}
 
           <div className="design-line  border mt-7"></div>
         </div>

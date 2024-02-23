@@ -1,16 +1,27 @@
 import { PiHandbagFill } from "react-icons/pi";
+import { FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
-const Header = () => {
+import { useDispatch } from "react-redux";
+import { logout } from "../app/actions/user/userAction";
+import { useNavigate } from "react-router-dom";
+import {useSelector} from "react-redux"
+
+const Header = ({ isAuthenticate }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {cart} = useSelector((state)=> state.cart)
   return (
     <div className="header lg:flex lg:justify-around items-center">
       <div className="logo">
-        <h1
+       <Link to={"/"}>
+       
+       <h1
           style={{ fontFamily: "Cinzel" }}
           className="logo-heading text-center p-4 text-3xl font-semibold lg:text-4xl  "
         >
           {" "}
           Fashion Matrix
-        </h1>
+        </h1></Link>
       </div>
 
       {/* input-and-button-div */}
@@ -27,17 +38,38 @@ const Header = () => {
         </div>
 
         <div className="login-signup-cart-button flex gap-3 lg:gap-6  items-center lg:justify-between">
-          <Link to={"/cart"}><PiHandbagFill className="text-red text-2xl cursor-pointer" /></Link>
-          <Link to={"/register"}>
-            <button className="register-button text-red font-bold bg-gray pr-4 pl-4 pt-2 pb-2 text-xs rounded-full border border-red hover:text-white hover:bg-red transition-all ">
-              Register
-            </button>
+          <Link to={"/cart"} className="flex gap-2">
+            <PiHandbagFill className="text-red text-2xl cursor-pointer" />
+            <div className="cart-count ">{cart.length}</div>
           </Link>
-          <Link to={"/login"}>
-            <button className="register-button text-red font-bold bg-gray pr-4 pl-4 pt-2 pb-2 text-xs rounded-full border border-red hover:text-white hover:bg-red transition-all">
-              Login
+
+          {isAuthenticate ? (
+            <FaUser className="text-xl hover:text-red cursor-pointer" />
+          ) : (
+            <Link to={"/register"}>
+              <button className="register-button text-red font-bold bg-gray pr-4 pl-4 pt-2 pb-2 text-xs rounded-full border border-red hover:text-white hover:bg-red transition-all ">
+                Register
+              </button>
+            </Link>
+          )}
+
+          {isAuthenticate ? (
+            <button
+              onClick={() => {
+                dispatch(logout());
+                navigate("/login");
+              }}
+              className="register-button text-red font-bold bg-gray pr-4 pl-4 pt-2 pb-2 text-xs rounded-full border border-red hover:text-white hover:bg-red transition-all"
+            >
+              Logout
             </button>
-          </Link>
+          ) : (
+            <Link to={"/login"}>
+              <button className="register-button text-red font-bold bg-gray pr-4 pl-4 pt-2 pb-2 text-xs rounded-full border border-red hover:text-white hover:bg-red transition-all">
+                Login
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     </div>

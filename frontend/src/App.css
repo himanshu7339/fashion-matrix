@@ -18,5 +18,12 @@ body {
   transition: right 0.3s ease-in-out;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
 }
+.style-module_emptyIcons__Bg-FZ {
+  display: flex;
+  }
 
-
+.editable-row .ant-form-item-explain {
+  position: absolute;
+  top: 100%;
+  font-size: 12px;
+}

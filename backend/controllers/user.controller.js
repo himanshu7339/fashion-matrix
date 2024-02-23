@@ -34,8 +34,21 @@ export const register = catchAsyncHandler(async (req, res, next) => {
     })
     .json({
       success: true,
-      message: "Register successfully",
+      message: `Welcome ${name}`,
     });
+});
+
+// get all user admin route
+export const getAllUsers = catchAsyncHandler(async (req, res, next) => {
+  const users = await User.find();
+
+  if (!users) {
+    next(new ErrorHandler(404, "Users not found"));
+  }
+  res.status(200).json({
+    success: true,
+    users,
+  });
 });
 
 // login

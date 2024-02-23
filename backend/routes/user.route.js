@@ -1,6 +1,7 @@
 import express from "express";
 import {
   DeleteOwnProfile,
+  getAllUsers,
   login,
   logout,
   ownProfile,
@@ -18,5 +19,8 @@ router.route("/ownprofile").get(isAuthenticate, ownProfile);
 router.route("/updateprofile").put(isAuthenticate, updateOwnProfile);
 router.route("/deleteprofile").delete(isAuthenticate, DeleteOwnProfile);
 router.route("/logout").get(logout);
+
+// admin
+router.route("/admin/users").get(getAllUsers);
 
 export default router;

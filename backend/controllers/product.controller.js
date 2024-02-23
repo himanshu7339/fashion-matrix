@@ -12,32 +12,27 @@ export const createProduct = catchAsyncHandler(async (req, res, next) => {
     productColor,
     productSize,
     productCategory,
-    productReview,
     productDescription,
   } = req.body;
 
   const images = req.files;
-  console.log(
-    productName,
-    productPrice,
-    productColor,
-    productSize,
-    productCategory,
-    productReview,
-    productDescription
-  );
+
   if (
     !productName ||
     !productPrice ||
     !productColor ||
     !productSize ||
     !productCategory ||
-    !productReview ||
     !productDescription ||
     !images
   ) {
     return next(new ErrorHandler(401, "All product field are required"));
   }
+
+  const existProductName = await Product.findOne({ productName: productName });
+
+  if (existProductName)
+    return next(new ErrorHandler(401, "Product name already exist"));
 
   const productImages = await uploadImages(images);
 
@@ -47,7 +42,6 @@ export const createProduct = catchAsyncHandler(async (req, res, next) => {
     productColor,
     productSize,
     productCategory,
-    productReview,
     productDescription,
     productImages: productImages,
   });
@@ -67,6 +61,21 @@ export const getAllProducts = catchAsyncHandler(async (req, res, next) => {
   res.status(201).json({
     success: true,
     products,
+  });
+});
+
+// get Product By Id
+
+export const getProductById = catchAsyncHandler(async (req, res, next) => {
+  const { productId } = req.params;
+
+  const product = await Product.findById(productId);
+
+  if (!product) return next(new ErrorHandler(404, "Products not found"));
+
+  res.status(201).json({
+    success: true,
+    product,
   });
 });
 

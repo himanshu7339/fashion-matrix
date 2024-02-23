@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import boyImage from "../assets/images/red-shoes-boy.jpg";
 import perfumeImage from "../assets/images/red-perfume.jpg";
 import girlImage from "../assets/images/red-girl-photo.jpg";
@@ -10,8 +10,16 @@ import capCollection from "../assets/images/cap-collection.jpg";
 import blackCoat from "../assets/images/black-coat.jpg";
 import clothShop from "../assets/images/clothing-shop-image.jpg";
 import { FaStar } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProducts } from "../app/actions/product/productAction";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const { products, loading } = useSelector((state) => state.product);
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, [dispatch]);
+
   return (
     <div className="home">
       <div className="hero-section-images flex flex-col lg:flex-row">
@@ -81,57 +89,24 @@ const Home = () => {
           <FaStar className="text-3xl text-red" />
         </div>
 
-        <div className="show-all-product-card m-4 grid gap-5 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-          <ProductCard
-            productImage={
-              "https://images.pexels.com/photos/2916814/pexels-photo-2916814.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            }
-            productPrice={"1,499.00"}
-            productTitle={"Black Full-zip Leather Jacket"}
-          />
-          <ProductCard
-            productImage={
-              "https://images.pexels.com/photos/2916814/pexels-photo-2916814.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            }
-            productPrice={"1,499.00"}
-            productTitle={"Black Full-zip Leather Jacket"}
-          />
-          <ProductCard
-            productImage={
-              "https://images.pexels.com/photos/2916814/pexels-photo-2916814.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            }
-            productPrice={"1,499.00"}
-            productTitle={"Black Full-zip Leather Jacket"}
-          />
-          <ProductCard
-            productImage={
-              "https://images.pexels.com/photos/2916814/pexels-photo-2916814.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            }
-            productPrice={"1,499.00"}
-            productTitle={"Black Full-zip Leather Jacket"}
-          />
-          <ProductCard
-            productImage={
-              "https://images.pexels.com/photos/2916814/pexels-photo-2916814.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            }
-            productPrice={"1,499.00"}
-            productTitle={"Black Full-zip Leather Jacket"}
-          />
-          <ProductCard
-            productImage={
-              "https://images.pexels.com/photos/2916814/pexels-photo-2916814.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            }
-            productPrice={"1,499.00"}
-            productTitle={"Black Full-zip Leather Jacket"}
-          />
-          <ProductCard
-            productImage={
-              "https://images.pexels.com/photos/2916814/pexels-photo-2916814.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            }
-            productPrice={"1,499.00"}
-            productTitle={"Black Full-zip Leather Jacket"}
-          />
-        </div>
+        {loading ? (
+          <div>loading</div>
+        ) : (
+          <div className="show-all-product-card m-4 grid gap-5 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+            {products &&
+              products
+                .slice(0, 10)
+                .map((product, index) => (
+                  <ProductCard
+                    key={product._id}
+                    productImage={product.productImages[0].url}
+                    productPrice={product.productPrice}
+                    productTitle={product.productName}
+                    ProductId={product._id}
+                  />
+                ))}
+          </div>
+        )}
       </div>
 
       {/* fourth section */}
@@ -199,7 +174,6 @@ const Home = () => {
           <div className="text-section w-[80%] text-sm h-auto text-white">
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque eos
             laudantium aspernatur ab ea sequi totam repellendus perferendis,
-
           </div>
 
           <h1
@@ -214,7 +188,9 @@ const Home = () => {
           style={{ backgroundColor: "black" }}
           className="newsletter h-28 flex flex-col lg:flex-row justify-center items-center gap-3"
         >
-          <h1 className="text-white text-xl lg:text-4xl">Get Newsletter From Us!</h1>
+          <h1 className="text-white text-xl lg:text-4xl">
+            Get Newsletter From Us!
+          </h1>
 
           <form className="newsletter-from text-sm flex gap-3">
             <input
@@ -226,7 +202,7 @@ const Home = () => {
               type="submit"
               className="register-button  font-bold bg-gray pr-6 pl-6 pt-2 pb-2 text-sm rounded-full border border-red text-white bg-red transition-all"
             >
-              Login
+              Submit
             </button>
           </form>
         </div>
