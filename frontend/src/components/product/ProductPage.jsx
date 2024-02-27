@@ -20,7 +20,9 @@ const ProductPage = ({ setProgressBar }) => {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const dispatch = useDispatch();
+  const [error, setError] = useState("");
 
+  
   const { productId } = useParams();
 
   const toggleDescription = () => {
@@ -39,6 +41,11 @@ const ProductPage = ({ setProgressBar }) => {
 
   // add to cart handler
   const addToCartHandler = (productName, productPrice, productImage, _id) => {
+    if (!selectedColor || !selectedSize) {
+      setError("Please select color and size before adding to cart");
+      return;
+    }
+
     const productItem = {
       _id,
       productName,
@@ -48,15 +55,17 @@ const ProductPage = ({ setProgressBar }) => {
       selectedColor,
       selectedSize,
     };
+
     dispatch(addCart(productItem));
-    toast.success("Product added in cart");
+    toast.success("Product added to cart");
+    setError("");
   };
 
-  // remove from cart handler
-  const removeFromCartHandler = () => {
-    console.log("remove from cart handler");
-  };
-
+  
+ if(error){
+  toast.error(error)
+  setError("")
+ }
   // increasing product qty handler
   const increasingQty = () => {
     const newQty = productQty + 1;
@@ -112,11 +121,13 @@ const ProductPage = ({ setProgressBar }) => {
               {product &&
                 product.productColor.map((color, index) => (
                   <div
-                    key={index}
-                    className={`product-image-with-color border border-darkBlue p-4 rounded-full cursor-pointer`}
-                    style={{ background: color }}
-                    onClick={() => setSelectedColor(color)}
-                  ></div>
+                  key={index}
+                  className={`product-image-with-color border  p-4 rounded-full cursor-pointer ${
+                    selectedColor === color ? "border-black border-2" : ""
+                  }`}
+                  style={{ background: color }}
+                  onClick={() => setSelectedColor(color)}
+                ></div>
                 ))}
             </div>
           </div>
@@ -132,9 +143,11 @@ const ProductPage = ({ setProgressBar }) => {
               {product &&
                 product.productSize.map((size, index) => (
                   <div
-                    onClick={() => setSelectedSize(size)}
                     key={index}
-                    className=" border pr-4 pl-4 lg:pr-9 lg:pl-9 lg:pb-2 lg:pt-2 cursor-pointer"
+                    onClick={() => setSelectedSize(size)}
+                    className={`border pr-4 pl-4 lg:pr-9 lg:pl-9 lg:pb-2 lg:pt-2 cursor-pointer ${
+                      selectedSize === size ? "border-black border-2" : ""
+                    }`}
                   >
                     {size}
                   </div>
@@ -160,7 +173,7 @@ const ProductPage = ({ setProgressBar }) => {
           </div>
 
           {/* add to cart button */}
-          <div className="add-to-card-button flex items-center gap-3">
+          <div className="add-to-card-button flex flex-col lg:flex-row lg:items-center gap-3">
             <button
               onClick={() =>
                 addToCartHandler(
@@ -175,7 +188,7 @@ const ProductPage = ({ setProgressBar }) => {
               <IoBag className="text-2xl" />
               Add{" "}
             </button>
-
+            
             <div className="product-qty flex  mt-7">
               <button
                 onClick={decreasingQty}

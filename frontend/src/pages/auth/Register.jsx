@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { clearError, clearMessage } from "../../app/features/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
-const Register = () => {
+const Register = ({setProgressBar}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -23,6 +23,10 @@ const Register = () => {
   };
 
   useEffect(() => {
+    setProgressBar(50);
+    setTimeout(() => {
+      setProgressBar(100);
+    }, 200);
     if (message) {
       toast.success(message);
       dispatch(clearMessage());

@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { login } from "../../app/actions/user/userAction";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
-const Login = () => {
+const Login = ({ setProgressBar }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
@@ -19,8 +19,12 @@ const Login = () => {
   const { loading, message, error, isAuthenticate } = useSelector(
     (state) => state.user
   );
- 
+
   useEffect(() => {
+    setProgressBar(50);
+    setTimeout(() => {
+      setProgressBar(100);
+    }, 200);
     if (message) {
       toast.success(message);
       dispatch(clearMessage());
@@ -33,7 +37,15 @@ const Login = () => {
     if (isAuthenticate) {
       navigate("/");
     }
-  }, [loading, message, error, dispatch, isAuthenticate, navigate]);
+  }, [
+    loading,
+    message,
+    error,
+    dispatch,
+    isAuthenticate,
+    navigate,
+    setProgressBar,
+  ]);
   return (
     <div className="login flex justify-center items-center lg:h-[100vh] lg:justify-start lg:items-start">
       <div className="form-div lg:w-[50%] w-full  m-7 ">

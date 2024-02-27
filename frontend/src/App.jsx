@@ -23,10 +23,21 @@ import DashboardLayout from "./pages/dashboard/DashboardLayout";
 import Orders from "./pages/dashboard/Orders";
 import CreateProduct from "./pages/dashboard/CreateProduct";
 import Categories from "./pages/dashboard/Categories";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import CheckoutForm from "./components/CheckoutForm";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 export default function App() {
   const dispatch = useDispatch();
   const [progress, setProgress] = useState(0);
+  
+  const options = {
+    // passing the client secret obtained in step 3
+    clientSecret: '{{CLIENT_SECRET}}',
+    // Fully customizable with appearance API.
+    appearance: {/*...*/},
+  };
 
   const { isAuthenticate, loading } = useSelector((state) => state.user);
   useEffect(() => {
@@ -43,13 +54,21 @@ export default function App() {
         autoClose={1000}
         newestOnTop={false}
       />
+
       <Header isAuthenticate={isAuthenticate} />
       <LoadingBar color="#f11946" progress={progress} />
+
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/products" element={<ShowProducts />} />
+        <Route path="/login" element={<Login setProgressBar={setProgress} />} />
+        <Route
+          path="/register"
+          element={<Register setProgressBar={setProgress} />}
+        />
+        <Route
+          path="/products"
+          element={<ShowProducts setProgressBar={setProgress} />}
+        />
         <Route
           path="/product/:productId"
           element={<ProductPage setProgressBar={setProgress} />}
@@ -58,6 +77,8 @@ export default function App() {
         <Route path="/cart" element={<Cart setProgressBar={setProgress} />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/paymentsuccess" element={<PaymentSuccess />} />
+        
 
         {/* Dashboard route */}
         <Route path="/admin/dashboard" element={<DashboardLayout />}>

@@ -21,7 +21,7 @@ const Home = () => {
   }, [dispatch]);
 
   return (
-    <div className="home">
+    <div className="home scroll-smooth">
       <div className="hero-section-images flex flex-col lg:flex-row">
         <div className="image-container relative overflow-hidden">
           <img

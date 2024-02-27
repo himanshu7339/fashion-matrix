@@ -1,3 +1,4 @@
+// add comma in price
 export function formatPriceWithCommas(price) {
     let priceString = price.toString();
 
@@ -12,7 +13,7 @@ export function formatPriceWithCommas(price) {
     return formattedPrice;
   }
 
-
+// text word limit
  export function truncateText(text, maxWords) {
     const words = text.split(' ');
     if (words.length > maxWords) {
@@ -21,3 +22,10 @@ export function formatPriceWithCommas(price) {
       return text;
     }
   }
+
+// calculate Cart Total
+ export const calculateCartTotal = (cart) => {
+    return cart?.reduce((total, item) => {
+     return total + item.productQty * item.productPrice;
+    }, 0);
+  };

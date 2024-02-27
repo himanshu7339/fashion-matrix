@@ -62,7 +62,7 @@ export const getAllProducts = catchAsyncHandler(async (req, res, next) => {
     success: true,
     products,
   });
-});
+})
 
 // get Product By Id
 

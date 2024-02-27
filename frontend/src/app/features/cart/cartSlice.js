@@ -31,9 +31,15 @@ export const cartSlice = createSlice({
     },
 
     removeCart: (state, action) => {
-      state.loading = false;
-      state.products = action.payload;
-    },
+        const productIdToRemove = action.payload;
+      
+        // Filter out the item with the specified productId
+        state.cart = state.cart.filter(item => item._id !== productIdToRemove);
+        
+        localStorage.setItem('cart', JSON.stringify(state.cart));
+        // Update loading status
+        state.loading = false;
+      },
 
     clearMessage: (state) => {
       state.message = null;
