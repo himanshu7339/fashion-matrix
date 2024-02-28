@@ -5,6 +5,6 @@ import { createShipping } from "../controllers/shipping.controller.js";
 
 const router = express.Router();
 
-router.route("/createshipping").post(createShipping);
+router.route("/createshipping").post(isAuthenticate,createShipping);
 
 export default router;

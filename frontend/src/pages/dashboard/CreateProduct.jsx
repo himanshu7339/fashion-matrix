@@ -46,7 +46,7 @@ const CreateProduct = () => {
     }
   };
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("productName", productName);
@@ -67,14 +67,8 @@ const CreateProduct = () => {
 
     dispatch(createProduct(formData));
     // Clear the form fields and reset the state
-    setProductName("");
-    setProductPrice(null);
-    setProductCategory("");
-    setProductDescription("");
-    setProductSizes([]);
-    setProductColors([]);
-    setCustomColor("");
-    setSelectedImages([]);
+    
+
   };
 
   const handleProductSizeChange = (e) => {

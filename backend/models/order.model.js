@@ -1,12 +1,11 @@
 // Import Mongoose
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 // Define Order Schema
 const orderSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User', // Reference to the User model (if you have one)
-    required: true,
   },
   products: [
     {
@@ -32,13 +31,11 @@ const orderSchema = new mongoose.Schema({
   },
   paymentMethod: {
     type: String,
-    required: true,
+    default :"Online"
   },
   shippingAddress: {
-    address: String,
-    city: String,
-    postalCode: String,
-    country: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref :"Shipping"
   },
   orderDate: {
     type: Date,
@@ -47,7 +44,5 @@ const orderSchema = new mongoose.Schema({
 });
 
 // Create Order model
-const Order = mongoose.model('Order', orderSchema);
+export const Order = mongoose.model("Order", orderSchema);
 
-// Export the Order model
-module.exports = Order;

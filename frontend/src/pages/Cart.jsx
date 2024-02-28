@@ -12,13 +12,9 @@ import { removeCart } from "../app/features/cart/cartSlice";
 import { createShipping } from "../app/actions/shipping/shippingAction";
 import axios from "axios";
 import { serverUrl } from "../app/store";
-import razorpayLogo from "../assets/images/Fashion-Matrix.png";
 
 import { loadStripe } from "@stripe/stripe-js";
-import {
-  EmbeddedCheckoutProvider,
-  EmbeddedCheckout,
-} from "@stripe/react-stripe-js";
+import { createOrder } from "../app/actions/order/orderAction";
 
 const stripe = await loadStripe(
   "pk_test_51KjNf2SDllj7UlZwMOSehZ8xJLOPMWTDwhI3RoFuzSVYq4qiLt3NzSbhb97DC28k788hs3mL03zLsVU2uljqzQ68009CpFOxeK"
@@ -26,6 +22,7 @@ const stripe = await loadStripe(
 const Cart = ({ setProgressBar }) => {
   const { cart } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
+  const { shipping } = useSelector((state) => state.shipping);
   const dispatch = useDispatch();
 
   const subtotalPrice = calculateCartTotal(cart);
@@ -36,6 +33,8 @@ const Cart = ({ setProgressBar }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const shippingCharge = subtotalPrice > 500 ? 0 : 99;
   const grandTotal = subtotalPrice + shippingCharge;
+
+  // create order
 
   const createPaymentSession = async () => {
     try {
@@ -48,16 +47,18 @@ const Cart = ({ setProgressBar }) => {
           headers: {
             "Content-Type": "application/json",
           },
+          withCredentials: true,
         }
       );
 
       const result = await stripe.redirectToCheckout({
         sessionId: data.id,
       });
-      console.log(result);
+
       if (result.error) {
         console.log(result.error);
       }
+      dispatch(createOrder(cart, shipping, subtotalPrice));
     } catch (error) {
       console.error("Error creating order:", error);
     }

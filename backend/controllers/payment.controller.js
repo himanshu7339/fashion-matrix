@@ -23,7 +23,7 @@ export const processPayment = catchAsyncHandler(async (req, res, next) => {
     line_items: lineItems,
     mode: "payment",
     success_url: `${YOUR_DOMAIN}/paymentsuccess`,
-    cancel_url: `${YOUR_DOMAIN}/cancel`,
+    cancel_url: `${YOUR_DOMAIN}/paymentFailed`,
   });
 
   return res.json({ id: session.id });

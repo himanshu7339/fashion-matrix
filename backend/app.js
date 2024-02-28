@@ -53,6 +53,7 @@ import category from "./routes/category.route.js";
 import review from "./routes/review.route.js";
 import shipping from "./routes/shipping.route.js";
 import payment from "./routes/payment.route.js";
+import order from "./routes/order.route.js"
 
 app.use("/api/v1", user);
 app.use("/api/v1", product);
@@ -60,6 +61,7 @@ app.use("/api/v1", category);
 app.use("/api/v1", review);
 app.use("/api/v1", shipping);
 app.use("/api/v1", payment);
+app.use("/api/v1", order);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

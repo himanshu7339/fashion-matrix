@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 export const isAuthenticate = async (req, res, next) => {
   try {
     const token = req.cookies.token;
+ 
 
     if (!token) {
       return next(new ErrorHandler(401, "Please login"));
@@ -28,9 +29,10 @@ export const isAuthenticate = async (req, res, next) => {
 };
 
 // is Admin middleware
-const isAdmin = (req, res, next) => {
+export const isAdmin = (req, res, next) => {
   const user = req.user;
-  if (user.role !== "admin") {
-    next(new ErrorHandler(401, "Only admin access this resource"));
+  if (!user || user.role !== "admin") {
+    return next(new ErrorHandler(401, "Only admin can access this resource"));
   }
+  next()
 };

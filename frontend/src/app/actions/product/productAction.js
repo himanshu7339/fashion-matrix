@@ -20,7 +20,6 @@ export const getAllProducts = () => async (dispatch) => {
     const { data } = await axios.get(`${serverUrl}/products`, {
       withCredentials: true,
     });
-    console.log(data);
     dispatch(successGetAllProducts(data.products));
   } catch (error) {
     dispatch(getAllProductsFail(error.response.data.message));

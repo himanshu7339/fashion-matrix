@@ -6,7 +6,7 @@ import { logout } from "../app/actions/user/userAction";
 import { useNavigate } from "react-router-dom";
 import {useSelector} from "react-redux"
 
-const Header = ({ isAuthenticate }) => {
+const Header = ({ isAuthenticate}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {cart} = useSelector((state)=> state.cart)

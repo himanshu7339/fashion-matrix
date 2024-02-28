@@ -1,17 +1,20 @@
 import express from "express";
 
-import { isAuthenticate } from "../middleware/auth.middleware.js";
+import { isAdmin, isAuthenticate } from "../middleware/auth.middleware.js";
 import {
   createCategory,
   getAllCategories,
   updateCategory,
-  deleteCategory
+  deleteCategory,
 } from "../controllers/category.controller.js";
 
 const router = express.Router();
 
-router.route("/createcategory").post(isAuthenticate, createCategory);
+router.route("/createcategory").post(isAuthenticate, isAdmin, createCategory);
 router.route("/categories").get(getAllCategories);
-router.route("/updatecategory/:categoryId").put(updateCategory).delete(deleteCategory);
+router
+  .route("/updatecategory/:categoryId")
+  .put(isAuthenticate, isAdmin,updateCategory)
+  .delete(isAuthenticate, isAdmin,deleteCategory);
 
 export default router;

@@ -24,29 +24,22 @@ import Orders from "./pages/dashboard/Orders";
 import CreateProduct from "./pages/dashboard/CreateProduct";
 import Categories from "./pages/dashboard/Categories";
 import PaymentSuccess from "./pages/PaymentSuccess";
-import CheckoutForm from "./components/CheckoutForm";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+import PaymentFail from "./pages/PaymentFailed";
+import {
+  AdminProtectedRoute,
+  LoginProtectedRoute,
+} from "./components/ProtectedRoute";
+import DashboardIconButton from "./components/iconTypeComponents/DashboardIconButton";
 
 export default function App() {
   const dispatch = useDispatch();
   const [progress, setProgress] = useState(0);
-  
-  const options = {
-    // passing the client secret obtained in step 3
-    clientSecret: '{{CLIENT_SECRET}}',
-    // Fully customizable with appearance API.
-    appearance: {/*...*/},
-  };
 
-  const { isAuthenticate, loading } = useSelector((state) => state.user);
+  const { isAuthenticate, user, loading } = useSelector((state) => state.user);
   useEffect(() => {
     dispatch(ownProfile());
   }, [dispatch]);
 
-  if (loading) {
-    return <div>....loading</div>;
-  }
   return (
     <BrowserRouter>
       <ToastContainer
@@ -55,42 +48,95 @@ export default function App() {
         newestOnTop={false}
       />
 
-      <Header isAuthenticate={isAuthenticate} />
+      <Header isAuthenticate={isAuthenticate} user={user} />
+      {user && user.user.role === "admin" && <DashboardIconButton />}
       <LoadingBar color="#f11946" progress={progress} />
+      {loading ? (
+        <p>loading</p>
+      ) : (
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/login"
+            element={<Login setProgressBar={setProgress} />}
+          />
+          <Route
+            path="/register"
+            element={<Register setProgressBar={setProgress} />}
+          />
+          <Route
+            path="/products"
+            element={<ShowProducts setProgressBar={setProgress} />}
+          />
+          <Route
+            path="/product/:productId"
+            element={<ProductPage setProgressBar={setProgress} />}
+          />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/cart" element={<Cart setProgressBar={setProgress} />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route
+            path="/paymentsuccess"
+            element={
+              <LoginProtectedRoute isAuthenticate={isAuthenticate}>
+                <PaymentSuccess />
+              </LoginProtectedRoute>
+            }
+          />
+          <Route
+            path="/paymentfailed"
+            element={
+              <LoginProtectedRoute isAuthenticate={isAuthenticate}>
+                <PaymentFail />
+              </LoginProtectedRoute>
+            }
+          />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login setProgressBar={setProgress} />} />
-        <Route
-          path="/register"
-          element={<Register setProgressBar={setProgress} />}
-        />
-        <Route
-          path="/products"
-          element={<ShowProducts setProgressBar={setProgress} />}
-        />
-        <Route
-          path="/product/:productId"
-          element={<ProductPage setProgressBar={setProgress} />}
-        />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/cart" element={<Cart setProgressBar={setProgress} />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/paymentsuccess" element={<PaymentSuccess />} />
-        
+          {/* Dashboard route */}
 
-        {/* Dashboard route */}
-        <Route path="/admin/dashboard" element={<DashboardLayout />}>
-          <Route element={<Dashboard />} />
-          <Route path="users" element={<Users />} />
-          <Route path="products" element={<Products />} />
-          <Route path="orders" element={<Orders />} />
-          <Route path="categories" element={<Categories />} />
-          <Route path="categories" element={<Categories />} />
-          <Route path="createproduct" element={<CreateProduct />} />
-        </Route>
-      </Routes>
+          {user && (
+            <Route
+              path="/admin/dashboard"
+              element={
+                <AdminProtectedRoute
+                  isAuthenticate={isAuthenticate}
+                  user={user}
+                >
+                  <DashboardLayout />
+                </AdminProtectedRoute>
+              }
+            >
+              <Route
+                element={
+                  <AdminProtectedRoute
+                    isAuthenticate={isAuthenticate}
+                    user={user}
+                  >
+                    <Dashboard />
+                  </AdminProtectedRoute>
+                }
+              />
+              <Route path="users" element={<Users />} />
+              <Route path="products" element={<Products />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="categories" element={<Categories />} />
+              <Route path="categories" element={<Categories />} />
+              <Route
+                path="createproduct"
+                element={
+                  <AdminProtectedRoute
+                    isAuthenticate={isAuthenticate}
+                    user={user}
+                  >
+                    <CreateProduct />
+                  </AdminProtectedRoute>
+                }
+              />
+            </Route>
+          )}
+        </Routes>
+      )}
 
       <Footer />
     </BrowserRouter>
